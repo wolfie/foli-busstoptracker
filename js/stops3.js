@@ -304,13 +304,10 @@ function appendChild(cont, cld) {
         }
 
         /* vanhat pois ja uusi lista tilalle */
-        var helpdiv = createTag('div');
-
         while (listnode.firstChild) {
             listnode.removeChild(listnode.firstChild);
         }
 
-        appendChild(listnode, helpdiv);
         appendChild(listnode, table);
     }
 
