@@ -86,7 +86,9 @@ function appendChild(cont, cld) {
 /** ja logiikka itte */
 (function () {
 
+    /** type {Object.<*, StopMonitoringData} */
     var coll = {};
+
     var reftime = 0; // otetaan kello serveriltä, niin ei haittaa jos clientti väärässä ajassa
     var listnode = icontent;
 
