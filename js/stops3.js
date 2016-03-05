@@ -312,7 +312,6 @@ function pack(cont, cld) {
      */
 
     var pagepos = 0;
-    var incremental = 0;
     function sortAndDisplay() {
 
         var sorted = [];
@@ -377,7 +376,6 @@ function pack(cont, cld) {
         }
 
         var i = pagerows;
-        var origpos = pagepos;
         while ((pagepos < sorted.length) && (pagepos < lastrow) && (i--)) {
 
             var e = sorted[pagepos++];

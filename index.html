@@ -10,27 +10,19 @@
     <link rel='stylesheet' href='css/styles.css' type='text/css' media='all' />
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            updateClock();
-
-        }); //document ready
+        $(document).ready(updateClock);
 
         function updateClock() {
             var t = new Date();
             t.toString('yyyy-MM-dd');
             var H = t.getHours();
             var M = t.getMinutes();
-            var S = t.getSeconds();
             if (H < 10)
                 H = "0" + H;
             if (M < 10)
                 M = "0" + M;
-            if (S < 10)
-                S = "0" + S;
             $("#clock").text(H + ":" + M);
             setTimeout(updateClock, 1000);
-            var time = H + ":" + M;
-            //alert("Aika: "+time);
         }
     </script>
     <script type="text/javascript">
