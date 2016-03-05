@@ -161,19 +161,15 @@ function pack(cont, cld) {
                             probeStops = ['2125', '2126'];
                             break;
                         case 'kauppatori':
-                            probeStops =
-                                ['T1', 'T2', 'T3', 'T4', 'T5', 'T6',
-                                    'T7', 'T8', 'T9', 'T10', 'T24', 'T34',
-                                    'T36', 'T38', 'T40', 'T33', 'T35', 'T37',
-                                    'T39', 'T42', 'T41', 'T53'];
+                            probeStops = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9',
+                                'T10', 'T24', 'T34', 'T36', 'T38', 'T40', 'T33', 'T35', 'T37',
+                                'T39', 'T42', 'T41', 'T53'];
                             break;
                         case 'satama':
-                            probeStops =
-                                ['1', '2'];
+                            probeStops = ['1', '2'];
                             break;
                         case 'lentokentta':
-                            probeStops =
-                                ['1586'];
+                            probeStops = ['1586'];
                             break;
                         default:
                             /* pilkkueroiteltu */
