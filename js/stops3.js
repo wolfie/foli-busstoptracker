@@ -312,8 +312,6 @@ function appendChild(cont, cld) {
         appendChild(listnode, table);
     }
 
-    /* parse jsonstop, yhteinen käsittely ie:n
-     XDomainRequestilta tulevien kanssa */
     function parse(stopnum, response) {
 
         try {
@@ -352,8 +350,7 @@ function appendChild(cont, cld) {
         }
     }
 
-    function probeGen(stopnum) {
-
+    function probe(stopnum) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', REST_ENDPOINT + stopnum, true);
         xhr.onreadystatechange = function () {
@@ -372,24 +369,7 @@ function appendChild(cont, cld) {
         xhr.send();
     }
 
-    function probeIE(stopnum) {
-
-        var xhr = new XDomainRequest();
-        xhr.open('GET', REST_ENDPOINT + stopnum);
-        xhr.onload = function () {
-            parse(stopnum, xhr.responseText);
-        };
-
-        /* .onerror, .ontimeout, emme piittaa, setInterval hoitaa
-         ja parempi onni seuraavalla kerralla */
-
-        xhr.send();
-    }
-
     function poll() {
-
-        var probe = (window.XDomainRequest && window.ActiveXObject) ?
-            probeIE : probeGen;
 
         /* heitetään requestit keräilyyn... */
         probeStops.forEach(function (k) {
