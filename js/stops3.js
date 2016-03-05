@@ -363,8 +363,7 @@ function appendChild(cont, cld) {
 
             /* else */
             if (xhr.status != 200)
-                return; /* kusi, no hätä,
-             interval hakee sitten uusiksi */
+                return; // kusi, no hätä, interval hakee sitten uusiksi
 
             /* yhteinen käsittely */
             parse(stopnum, xhr.responseText);
