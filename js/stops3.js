@@ -1,5 +1,6 @@
 'use strict';
 var DEBUG = true;
+var REST_ENDPOINT = 'http://data-western.foli.fi/stops/';
 
 /** ie-fixup */
 (function () {
@@ -429,7 +430,7 @@ function pack(cont, cld) {
     function probeGen(stopnum) {
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://data-western.foli.fi/stops/' + stopnum, true);
+        xhr.open('GET', REST_ENDPOINT + stopnum, true);
         xhr.onreadystatechange = function () {
 
             if (xhr.readyState != 4)
@@ -450,7 +451,7 @@ function pack(cont, cld) {
     function probeIE(stopnum) {
 
         var xhr = new XDomainRequest();
-        xhr.open('GET', 'http://data-western.foli.fi/stops/' + stopnum);
+        xhr.open('GET', REST_ENDPOINT + stopnum);
         xhr.onload = function () {
             parse(stopnum, xhr.responseText);
         };
