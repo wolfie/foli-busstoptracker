@@ -2,58 +2,6 @@
 var DEBUG = true;
 var REST_ENDPOINT = 'http://data-western.foli.fi/stops/';
 
-/** ie-fixup */
-(function () {
-    if (!Array.prototype.forEach) {
-        Array.prototype.forEach = function (func) {
-
-            var len = this.length;
-            if (typeof (func) != 'function')
-                throw new TypeError();
-
-            var thisp = arguments[1];
-            for (var i = 0; i < len; i++) {
-                if (i in this)
-                    func.call(thisp, this[i], i, this);
-            }
-        };
-    }
-
-    if (!Array.prototype.filter) {
-        Array.prototype.filter = function (func) {
-
-            var len = this.length;
-            if (typeof (func) != 'function')
-                throw new TypeError();
-
-            var res = [];
-            var thisp = arguments[1];
-            for (var i = 0; i < len; i++) {
-                if (i in this) {
-                    var val = this[i];
-                    if (func.call(thisp, val, i, this))
-                        res.push(val);
-                }
-            }
-
-            return res;
-        };
-    }
-
-    /* puuttuvat consolet + pelit */
-    function dummylog() {
-        /* void */
-    }
-
-    if (!window.console)
-        window.console = {};
-    if (!window.console.log)
-        window.console.log = dummylog;
-    if (!window.console.dir)
-        window.console.log = dummylog;
-
-})();
-
 /* pari helpperifunkkarit takataskukataloogista */
 
 function strpadLeft(str, chr, len) {
