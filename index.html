@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=8">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.lettering.js"></script>
+    <script type="text/javascript" src="js/textillate.js"></script>
+    <link rel='stylesheet' href='css/animate.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='css/styles.css' type='text/css' media='all' />
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            updateClock();
+
+        }); //document ready
+
+        function updateClock() {
+            var t = new Date()
+            t.toString('yyyy-MM-dd');
+            var H = t.getHours();
+            var M = t.getMinutes();
+            var S = t.getSeconds();
+            if (H < 10)
+                H = "0" + H
+            if (M < 10)
+                M = "0" + M
+            if (S < 10)
+                S = "0" + S
+            $("#clock").text(H + ":" + M);
+            setTimeout(updateClock, 1000);
+            var time = H + ":" + M;
+            //alert("Aika: "+time);
+        }
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $('.title').textillate({
+                loop: true,
+                in: {
+                    effect: 'fadeIn',
+                    sync: true},
+                out: {
+                    effect: 'fadeOut',
+                    sync: true}
+            });
+            $('.dest').textillate({
+                loop: true,
+                in: {
+                    effect: 'fadeIn',
+                    sync: true},
+                out: {
+                    effect: 'fadeOut',
+                    sync: true}
+            });
+        })
+    </script>
+</head>
+<body>
+<header>
+    <section id="left">
+        <img src="images/foli_logo.png" alt="logo">
+    </section>
+    <section id="middle">
+        <br/>
+        <span id="clock"></span>
+    </section>
+    <section id="right">
+        <br/>
+        <br/>
+        <img src="images/lilja.png" alt="Lilja">
+    </section>
+</header>
+<div id="tableheader">
+    <div id="header-line">
+            <span class="title">
+                <ul class="texts">
+                    <li>Linja</li>
+                    <li>Linje</li>
+                </ul>
+            </span>
+    </div>
+    <div id="header-dest">
+            <span class="title">
+                <ul class="texts">
+                    <li>Määränpää</li>
+                    <li>Destination</li>
+                </ul>
+            </span>
+    </div>
+    <div id="header-depa">
+            <span class="title">
+                <ul class="texts">
+                    <li>Lähtö</li>
+                    <li>Avgång</li>
+                </ul>
+            </span>
+    </div>
+    <div id="header-stop">
+            <span class="title">
+                <ul class="texts">
+                    <li>Pys.</li>
+                    <li>Stop</li>
+                </ul>
+            </span>
+    </div>
+</div>
+<span id="icontent"></span>
+<script src="js/stops3.js" type="text/javascript"></script>
+</body>
+</html>
