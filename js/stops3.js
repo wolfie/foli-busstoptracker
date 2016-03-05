@@ -129,18 +129,8 @@ function rc(e) {
 
 /** set class */
 function cl(e, v) {
-    if (!(e = el(e)))
-        return false;
-    return (typeof (v) == 'string') ?
-        at(at(e, 'class', v), 'className', v) :
-        ac(ac(e, 'class'), 'className');
-}
-
-function ac() {
-    /*
-     * Empty implementation - did not exist before, so jshint complained before. Added here so that
-     * code can be decluttered afterwards
-     */
+    e.className = v;
+    return e;
 }
 
 /** pack cld -&gt; cont */
