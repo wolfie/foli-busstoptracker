@@ -28,3 +28,9 @@
  * @name headerStop
  * @type HTMLDivElement
  */
+/**
+ * The Div where the timetable results will be output
+ * @global
+ * @name icontent
+ * @type HTMLDivElement
+ */

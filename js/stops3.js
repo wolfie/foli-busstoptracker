@@ -50,13 +50,6 @@ function strftime(format, date) {
     return res;
 }
 
-/** get-element */
-function el(v) {
-    if (v.setAttribute)
-        return v;
-    return document.getElementById(v);
-}
-
 /** create-element */
 function ct(tag) {
     return document.createElement(tag);
@@ -65,14 +58,6 @@ function ct(tag) {
 /** create-text-node */
 function tn(txt) {
     return document.createTextNode('' + txt);
-}
-
-/** remove-child */
-function rc(e) {
-    e = el(e);
-    while (e.firstChild)
-        e.removeChild(e.firstChild);
-    return e;
 }
 
 /** set class */
@@ -92,7 +77,7 @@ function pack(cont, cld) {
 
     var coll = {};
     var reftime = 0; // otetaan kello serveriltä, niin ei haittaa jos clientti väärässä ajassa
-    var listnode = el('icontent');
+    var listnode = icontent;
 
     /* optiot ja defaultit */
     var firstrow = 0;
@@ -319,7 +304,11 @@ function pack(cont, cld) {
         /* vanhat pois ja uusi lista tilalle */
         var helpdiv = ct('div');
 
-        pack(rc(listnode), helpdiv);
+        while (listnode.firstChild) {
+            listnode.removeChild(listnode.firstChild);
+        }
+
+        pack(listnode, helpdiv);
         pack(listnode, table);
     }
 
