@@ -485,13 +485,3 @@ function pack(cont, cld) {
     /* plus kerta-ajo heti alkuun*/
     poll();
 })();
-
-/*
- Local variables: ***
- mode: javascript ***
- coding: utf-8 ***
- file-coding-system: utf-8 ***
- c-basic-offset: 4 ***
- End: ***
- */
-
