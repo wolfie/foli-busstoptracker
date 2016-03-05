@@ -55,7 +55,8 @@
          * @param {HTMLDivElement} element
          */
         function swapText(element) {
-            var text = element.getAttribute('data-swaptext');
+            //noinspection JSUnresolvedVariable
+            var text = element.dataset.swaptext;
             if (!text) {
                 element.textContent = "Can't find text to swap";
                 return;
