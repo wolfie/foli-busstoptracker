@@ -71,6 +71,17 @@ function createTag(tag, child) {
     return element;
 }
 
+/**
+ * @param {HTMLTableRowElement} row
+ * @param {string} cellContent
+ * @param {string} cellClassName
+ */
+function insertCell(row, cellContent, cellClassName) {
+    var cell = row.insertCell(-1);
+    cell.textContent = cellContent;
+    cell.className = cellClassName;
+}
+
 /** set class */
 function setClass(e, v) {
     e.className = v;
@@ -254,9 +265,9 @@ function setClass(e, v) {
         }
 
         /* display */
-        var tbody = createTag('tbody');
+
+        /** @type HTMLTableElement */
         var table = createTag('table');
-        table.appendChild(tbody);
 
         if ((pagepos < firstrow) ||
             (pagepos >= sorted.length) ||
@@ -268,34 +279,36 @@ function setClass(e, v) {
         var i = pagerows;
         while ((pagepos < sorted.length) && (pagepos < lastrow) && (i--)) {
 
+            //noinspection JSValidateTypes
+            /** @type HTMLTableRowElement */
+            var row = table.insertRow(-1);
+            row.className = 'row row' + (row.rowIndex % 2);
+
             var e = sorted[pagepos++];
-            var stop = createTag('td', e.stopnum);
-            var line = createTag('td', e.lineref);
-            var dest = '';
+
+            var line = e.lineref;
+            var destination = '';
+            var departure = '';
+            var stop = e.stopnum;
+
             if (e.stopnum === '1586' || e.stopnum === '1' || e.stopnum === '2') {
-                dest = createTag('td', 'Kauppatori');
+                destination = 'Kauppatori';
             } else {
-                dest = createTag('td', e.destinationdisplay);
+                destination = e.destinationdisplay;
             }
 
-            var sanedateAimed = strftime('H:i', e.aimeddeparturetime);
-            var sanedateExpected = strftime('H:i', e[datakey]);
-            var departureAimed = createTag('td', sanedateAimed);
-            var row = setClass(createTag('tr'), ('row row' + (i % 2)));
-            row.appendChild(setClass(line, 'line'));
-            row.appendChild(setClass(dest, 'dest'));
+            var aimedDeparture = e.aimeddeparturetime;
+            var expectedDeparture = e.expecteddeparturetime;
+            departure = strftime('H:i', Math.max(aimedDeparture, expectedDeparture));
 
-            //jos arvioitu suurempi niin silloin käytetään sitä
-            if (sanedateAimed < sanedateExpected) {
-                var boldexpe = createTag('b', sanedateExpected);
-                var departureExpected = createTag('td', boldexpe);
-                row.appendChild(setClass(departureExpected, 'depa'));
-            } else {
-                row.appendChild(setClass(departureAimed, 'depa'));
+            insertCell(row, line, 'line');
+            insertCell(row, destination, 'dest');
+            insertCell(row, departure, 'depa');
+            insertCell(row, stop, 'stop');
+
+            if (aimedDeparture < expectedDeparture) {
+                row.cells.item(2).classList.add('late');
             }
-
-            row.appendChild(setClass(stop, 'stop'));
-            tbody.appendChild(row);
         }
 
         /* vanhat pois ja uusi lista tilalle */

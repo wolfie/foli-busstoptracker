@@ -108,6 +108,9 @@ td.dest {
 td.depa {
     width: 200px;
 }
+td.depa.late {
+    font-weight: bold;
+}
 td.stop {
     width:15%;
 }
