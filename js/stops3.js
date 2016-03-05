@@ -1,7 +1,7 @@
 'use strict';
 var DEBUG = true;
 
-/* ie-fixup */
+/** ie-fixup */
 (function () {
     if (!Array.prototype.forEach) {
         Array.prototype.forEach = function (func) {
@@ -108,24 +108,24 @@ function strftime(format, date) {
     return res;
 }
 
-/* get-element */
+/** get-element */
 function el(v) {
     if (v.setAttribute)
         return v;
     return document.getElementById(v);
 }
 
-/* create-element */
+/** create-element */
 function ct(tag) {
     return document.createElement(tag);
 }
 
-/* create-text-node */
+/** create-text-node */
 function tn(txt) {
     return document.createTextNode('' + txt);
 }
 
-/* remove-child */
+/** remove-child */
 function rc(e) {
     e = el(e);
     while (e.firstChild)
@@ -141,7 +141,7 @@ function at(e, a, v) {
     return e;
 }
 
-/* set class */
+/** set class */
 function cl(e, v) {
     if (!(e = el(e)))
         return false;
@@ -157,13 +157,13 @@ function ac() {
      */
 }
 
-/* pack cld -> cont */
+/** pack cld -&gt; cont */
 function pack(cont, cld) {
     cont.appendChild(cld);
     return cont;
 }
 
-/* ja logiikka itte */
+/** ja logiikka itte */
 (function () {
 
     var coll = {};
