@@ -306,6 +306,7 @@ function pack(cont, cld) {
     function parse(stopnum, response) {
 
         try {
+            /** @type StopMonitoringData */
             var resp = JSON.parse(response);
             if (resp && resp.status) {
                 if ((resp.status == 'OK') &&
