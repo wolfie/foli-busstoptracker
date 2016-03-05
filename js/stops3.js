@@ -77,12 +77,6 @@ function setClass(e, v) {
     return e;
 }
 
-/** pack cld -&gt; cont */
-function appendChild(cont, cld) {
-    cont.appendChild(cld);
-    return cont;
-}
-
 /** ja logiikka itte */
 (function () {
 
@@ -261,7 +255,8 @@ function appendChild(cont, cld) {
 
         /* display */
         var tbody = createTag('tbody');
-        var table = appendChild(createTag('table'), tbody);
+        var table = createTag('table');
+        table.appendChild(tbody);
 
         if ((pagepos < firstrow) ||
             (pagepos >= sorted.length) ||
@@ -287,20 +282,20 @@ function appendChild(cont, cld) {
             var sanedateExpected = strftime('H:i', e[datakey]);
             var departureAimed = createTag('td', sanedateAimed);
             var row = setClass(createTag('tr'), ('row row' + (i % 2)));
-            appendChild(row, setClass(line, 'line'));
-            appendChild(row, setClass(dest, 'dest'));
+            row.appendChild(setClass(line, 'line'));
+            row.appendChild(setClass(dest, 'dest'));
 
             //jos arvioitu suurempi niin silloin käytetään sitä
             if (sanedateAimed < sanedateExpected) {
                 var boldexpe = createTag('b', sanedateExpected);
                 var departureExpected = createTag('td', boldexpe);
-                appendChild(row, setClass(departureExpected, 'depa'));
+                row.appendChild(setClass(departureExpected, 'depa'));
             } else {
-                appendChild(row, setClass(departureAimed, 'depa'));
+                row.appendChild(setClass(departureAimed, 'depa'));
             }
 
-            appendChild(row, setClass(stop, 'stop'));
-            appendChild(tbody, row);
+            row.appendChild(setClass(stop, 'stop'));
+            tbody.appendChild(row);
         }
 
         /* vanhat pois ja uusi lista tilalle */
@@ -308,7 +303,7 @@ function appendChild(cont, cld) {
             listnode.removeChild(listnode.firstChild);
         }
 
-        appendChild(listnode, table);
+        listnode.appendChild(table);
     }
 
     function parse(stopnum, response) {
