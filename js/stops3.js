@@ -2,54 +2,6 @@
 var DEBUG = true;
 var REST_ENDPOINT = 'http://data-western.foli.fi/stops/';
 
-/* pari helpperifunkkarit takataskukataloogista */
-
-function strpadLeft(str, chr, len) {
-    str = '' + str;
-    if (len > str.length)
-        for (len = len - str.length; len > 0; len--)
-            str = chr.charAt(0) + str;
-    return str;
-}
-
-function strftime(format, date) {
-
-    if (!date) {
-        date = new Date();
-    } else if (!date.getFullYear) {
-        date = new Date(date * 1000);
-    }
-
-    var c = '';
-    var res = '';
-    for (var i = 0; i < format.length; i++) {
-        switch ((c = format.charAt(i))) {
-            case 'Y':
-                res += strpadLeft(date.getFullYear(), '0', 4);
-                break;
-            case 'm':
-                res += strpadLeft(date.getMonth() + 1, '0', 2);
-                break;
-            case 'd':
-                res += strpadLeft(date.getDate(), '0', 2);
-                break;
-            case 'H':
-                res += strpadLeft(date.getHours(), '0', 2);
-                break;
-            case 'i':
-                res += strpadLeft(date.getMinutes(), '0', 2);
-                break;
-            case 's':
-                res += strpadLeft(date.getSeconds(), '0', 2);
-                break;
-            default:
-                res += c;
-        }
-    }
-
-    return res;
-}
-
 /**
  * create-element
  * @param {string} tag
@@ -80,6 +32,15 @@ function insertCell(row, cellContent, cellClassName) {
     var cell = row.insertCell(-1);
     cell.textContent = cellContent;
     cell.className = cellClassName;
+}
+
+/**
+ * Pad a number less than 10 to two characters (e.g. 9 -> '09')
+ * @param {number} number
+ * @returns {string}
+ */
+function padNumberToTwoChars(number) {
+    return (number < 10) ? '0' + number : '' + number;
 }
 
 /** set class */
@@ -299,7 +260,9 @@ function setClass(e, v) {
 
             var aimedDeparture = e.aimeddeparturetime;
             var expectedDeparture = e.expecteddeparturetime;
-            departure = strftime('H:i', Math.max(aimedDeparture, expectedDeparture));
+            var departureTime = new Date(Math.max(aimedDeparture, expectedDeparture) * 1000);
+            departure = padNumberToTwoChars(departureTime.getHours()) +
+                ':' + padNumberToTwoChars(departureTime.getMinutes());
 
             insertCell(row, line, 'line');
             insertCell(row, destination, 'dest');
