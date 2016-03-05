@@ -371,7 +371,6 @@ function pack(cont, cld) {
         /* vanhat pois ja uusi lista tilalle */
         var helpdiv = ct('div');
 
-        //pack(helpdiv, tn('Sivu : ' + origpos + ' / ' + sorted.length));
         pack(rc(listnode), helpdiv);
         pack(listnode, table);
     }
