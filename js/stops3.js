@@ -135,23 +135,19 @@ function pack(cont, cld) {
                     break;
                 case 'datakey':
                     /* kenttä jonka mukaan näytetään */
-                    switch (value) {
-                        case 'aa':
-                            datakey = 'aimedarrivaltime';
-                            break;
-                        case 'ad':
-                            datakey = 'aimeddeparturetime';
-                            break;
-                        case 'ea':
-                            datakey = 'expectedarrivaltime';
-                            break;
-                        case 'ed':
-                            datakey = 'expecteddeparturetime';
-                            break;
-                        default:
-                            datakey = 'expecteddeparturetime';
-                            break;
+
+                    var shorthands = {
+                        aa: 'aimedarrivaltime',
+                        ad: 'aimeddeparturetime',
+                        ea: 'expectedarrivaltime',
+                        ed: 'expecteddeparturetime'
+                    };
+
+                    datakey = shorthands[value];
+                    if (datakey === undefined) {
+                        datakey = 'expecteddeparturetime';
                     }
+
                     break;
                 case 'stops':
                     /* pysäkkilista pilkkuerotettuna tai sitten joku
