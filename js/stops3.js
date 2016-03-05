@@ -89,53 +89,53 @@ function pack(cont, cld) {
     var bundle = 1;
     var probeStops = [];
 
-    function parseparams() {
+    function parseParams() {
 
-        /* <a>:lla saa nätisti purettu urlin */
-        var tmp = ct('a');
-        tmp.href = ('' + window.location);
-        tmp = '' + tmp.search;
-        tmp = tmp.replace(/^\?/, '').split('&');
+        var pairs = window.location.search.substring(1).split('&');
 
-        /* saatiin tmp = [ 'param1=aa', 'param2=bee' ] */
-        tmp.forEach(function (k) {
+        /* saatiin pairs = [ 'param1=aa', 'param2=bee' ] */
+        pairs.forEach(function (pair) {
 
             /* ..joten parsitaan parametrit */
-            k = k.split('=');
-            switch (k[0]) {
+            pair = pair.split('=');
+            var key = pair[0];
+            var value = pair[1];
+            var valueAsInt = (value - 0);
+
+            switch (key) {
                 case 'firstrow':
                     /* eka rivi */
-                    firstrow = (k[1] - 0); /* ..to-int */
+                    firstrow = valueAsInt;
                     break;
 
                 case 'lastrow':
                     /* vika rivi */
-                    lastrow = (k[1] - 0);
+                    lastrow = valueAsInt;
                     break;
 
                 case 'pagerows':
                     /* monenneltako riviltä sivutetaan */
-                    pagerows = (k[1] - 0);
+                    pagerows = valueAsInt;
                     break;
 
                 case 'pollinterval':
                     /* pollaustiheys sekunteina */
-                    pollinterval = (k[1] - 0);
+                    pollinterval = valueAsInt;
                     break;
 
                 case 'bundle':
                     /* vain eka per linja per pysäkki */
-                    bundle = (k[1] - 0);
+                    bundle = valueAsInt;
                     break;
 
                 case 'maxforwardtime':
                     /* montako sekuntia nykyhetkestä eteenpäin
                      maksimissaan mukaan */
-                    maxforwardtime = (k[1] - 0);
+                    maxforwardtime = valueAsInt;
                     break;
                 case 'datakey':
                     /* kenttä jonka mukaan näytetään */
-                    switch (k[1]) {
+                    switch (value) {
                         case 'aa':
                             datakey = 'aimedarrivaltime';
                             break;
@@ -156,7 +156,7 @@ function pack(cont, cld) {
                 case 'stops':
                     /* pysäkkilista pilkkuerotettuna tai sitten joku
                      valmis defaultti */
-                    switch (k[1]) {
+                    switch (value) {
                         case 'ikea':
                             probeStops = ['2125', '2126'];
                             break;
@@ -177,16 +177,13 @@ function pack(cont, cld) {
                             break;
                         default:
                             /* pilkkueroiteltu */
-                            probeStops = k[1].split(',');
+                            probeStops = value.split(',');
                     }
                     break;
             }
         });
 
-        /* debug */
         if (DEBUG) {
-
-            /* :-b */
             console.log('firstrow: %o', firstrow);
             console.log('lastrow: %o', lastrow);
             console.log('pagerows: %o', pagerows);
@@ -404,7 +401,7 @@ function pack(cont, cld) {
     }
 
     /* asetukset url:stä */
-    parseparams();
+    parseParams();
 
     /* timer käyntiin */
     window.setInterval(poll, (pollinterval * 1000));
