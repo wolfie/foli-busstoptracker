@@ -306,9 +306,7 @@ function pack(cont, cld) {
     function parse(stopnum, response) {
 
         try {
-
-            var resp = '';
-            eval('resp = ' + response);
+            var resp = JSON.parse(response);
             if (resp && resp.status) {
                 if ((resp.status == 'OK') &&
                     (resp.sys == 'SM') && (resp.result)) {
