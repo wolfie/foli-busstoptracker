@@ -251,22 +251,6 @@ function pack(cont, cld) {
                             probeStops =
                                 ['1586'];
                             break;
-                        case 'lapa':
-                            probeStops =
-                                ['1736', '1735', '420'];
-                            break;
-                        case 'mara':
-                            probeStops =
-                                ['T5', 'T33', 'T7', '31', '821'];
-                            break;
-                        case 'jari':
-                            probeStops =
-                                ['T7', '3008'];
-                            break;
-                        case 'pete':
-                            probeStops =
-                                ['T4', 'T35', '391', '364', '392'];
-                            break;
                         default:
                             /* pilkkueroiteltu */
                             probeStops = k[1].split(',');
