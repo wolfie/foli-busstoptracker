@@ -1,11 +1,13 @@
+'use strict';
+var DEBUG = true;
 
 /* ie-fixup */
-(function() {
+(function () {
     if (!Array.prototype.forEach) {
-        Array.prototype.forEach = function(func) {
+        Array.prototype.forEach = function (func) {
 
-            var len = (this.length - 0);
-            if (typeof (func) != "function")
+            var len = this.length;
+            if (typeof (func) != 'function')
                 throw new TypeError();
 
             var thisp = arguments[1];
@@ -17,13 +19,13 @@
     }
 
     if (!Array.prototype.filter) {
-        Array.prototype.filter = function(func) {
+        Array.prototype.filter = function (func) {
 
-            var len = (this.length - 0);
-            if (typeof (func) != "function")
+            var len = this.length;
+            if (typeof (func) != 'function')
                 throw new TypeError();
 
-            var res = new Array();
+            var res = [];
             var thisp = arguments[1];
             for (var i = 0; i < len; i++) {
                 if (i in this) {
@@ -41,7 +43,7 @@
     function dummylog() {
         /* void */
     }
-    ;
+
     if (!window.console)
         window.console = {};
     if (!window.console.log)
@@ -52,20 +54,22 @@
 })();
 
 /* pari helpperifunkkarit takataskukataloogista */
-function strpad_left(str, chr, len) {
+function strpadLeft(str, chr, len) {
     str = '' + str;
     if (len > str.length)
         for (len = len - str.length; len > 0; len--)
             str = chr.charAt(0) + str;
     return str;
 }
-function strpad_right(str, chr, len) {
+
+function strpadRight(str, chr, len) {
     str = '' + str;
     if (len > str.length)
         for (len = len - str.length; len > 0; len--)
             str += chr.charAt(0);
     return str;
 }
+
 function strftime(format, date) {
 
     if (!date) {
@@ -74,26 +78,27 @@ function strftime(format, date) {
         date = new Date(date * 1000);
     }
 
-    var c, res = '';
+    var c = '';
+    var res = '';
     for (var i = 0; i < format.length; i++) {
         switch ((c = format.charAt(i))) {
             case 'Y':
-                res += strpad_left(date.getFullYear(), '0', 4);
+                res += strpadLeft(date.getFullYear(), '0', 4);
                 break;
             case 'm':
-                res += strpad_left(date.getMonth() + 1, '0', 2);
+                res += strpadLeft(date.getMonth() + 1, '0', 2);
                 break;
             case 'd':
-                res += strpad_left(date.getDate(), '0', 2);
+                res += strpadLeft(date.getDate(), '0', 2);
                 break;
             case 'H':
-                res += strpad_left(date.getHours(), '0', 2);
+                res += strpadLeft(date.getHours(), '0', 2);
                 break;
             case 'i':
-                res += strpad_left(date.getMinutes(), '0', 2);
+                res += strpadLeft(date.getMinutes(), '0', 2);
                 break;
             case 's':
-                res += strpad_left(date.getSeconds(), '0', 2);
+                res += strpadLeft(date.getSeconds(), '0', 2);
                 break;
             default:
                 res += c;
@@ -145,6 +150,13 @@ function cl(e, v) {
         ac(ac(e, 'class'), 'className');
 }
 
+function ac() {
+    /*
+     * Empty implementation - did not exist before, so jshint complained before. Added here so that
+     * code can be decluttered afterwards
+     */
+}
+
 /* pack cld -> cont */
 function pack(cont, cld) {
     cont.appendChild(cld);
@@ -152,23 +164,21 @@ function pack(cont, cld) {
 }
 
 /* ja logiikka itte */
-(function() {
+(function () {
 
     var coll = {};
-    var reftime = 0; /* otetaan kello serveriltä, niin ei haittaa jos
-     * clientti väärässä ajassa */
+    var reftime = 0; // otetaan kello serveriltä, niin ei haittaa jos clientti väärässä ajassa
     var listnode = el('icontent');
 
     /* optiot ja defaultit */
     var firstrow = 0;
-    //var lastrow = 0x7fffffff;
     var lastrow = 42;
     var pagerows = 14;
     var pollinterval = 30;
     var maxforwardtime = 7200;
     var datakey = 'expecteddeparturetime';
     var bundle = 1;
-    var probe_stops = [];
+    var probeStops = [];
 
     function parseparams() {
 
@@ -179,7 +189,7 @@ function pack(cont, cld) {
         tmp = tmp.replace(/^\?/, '').split('&');
 
         /* saatiin tmp = [ 'param1=aa', 'param2=bee' ] */
-        tmp.forEach(function(k) {
+        tmp.forEach(function (k) {
 
             /* ..joten parsitaan parametrit */
             k = k.split('=');
@@ -233,55 +243,55 @@ function pack(cont, cld) {
                             datakey = 'expecteddeparturetime';
                             break;
                     }
-
+                    break;
                 case 'stops':
                     /* pysäkkilista pilkkuerotettuna tai sitten joku
                      valmis defaultti */
                     switch (k[1]) {
                         case 'ikea':
-                            probe_stops = ['2125', '2126'];
+                            probeStops = ['2125', '2126'];
                             break;
                         case 'kauppatori':
-                            probe_stops =
+                            probeStops =
                                 ['T1', 'T2', 'T3', 'T4', 'T5', 'T6',
                                     'T7', 'T8', 'T9', 'T10', 'T24', 'T34',
                                     'T36', 'T38', 'T40', 'T33', 'T35', 'T37',
                                     'T39', 'T42', 'T41', 'T53'];
                             break;
                         case 'satama':
-                            probe_stops =
+                            probeStops =
                                 ['1', '2'];
                             break;
                         case 'lentokentta':
-                            probe_stops =
+                            probeStops =
                                 ['1586'];
                             break;
                         case 'lapa':
-                            probe_stops =
+                            probeStops =
                                 ['1736', '1735', '420'];
                             break;
                         case 'mara':
-                            probe_stops =
+                            probeStops =
                                 ['T5', 'T33', 'T7', '31', '821'];
                             break;
                         case 'jari':
-                            probe_stops =
-                                ['T7','3008'];
+                            probeStops =
+                                ['T7', '3008'];
                             break;
                         case 'pete':
-                            probe_stops =
+                            probeStops =
                                 ['T4', 'T35', '391', '364', '392'];
                             break;
                         default:
                             /* pilkkueroiteltu */
-                            probe_stops = k[1].split(',');
+                            probeStops = k[1].split(',');
                     }
                     break;
             }
         });
 
         /* debug */
-        if (true) {
+        if (DEBUG) {
 
             /* :-b */
             console.log('firstrow: %o', firstrow);
@@ -291,10 +301,9 @@ function pack(cont, cld) {
             console.log('maxforwardtime: %o', maxforwardtime);
             console.log('datakey: %o', datakey);
             console.log('bundle: %o', bundle);
-            console.log('probe_stops: %o', probe_stops);
+            console.log('probeStops: %o', probeStops);
         }
     }
-
 
     /* timeri kutsuu tätä erikseen
      *
@@ -304,21 +313,23 @@ function pack(cont, cld) {
 
     var pagepos = 0;
     var incremental = 0;
-    function sort_and_display() {
+    function sortAndDisplay() {
 
         var sorted = [];
         var maxtime = reftime + maxforwardtime;
+        var filterValidTime = function (e) {
+            if ((e[datakey]) &&
+                (e[datakey] > reftime) &&
+                (e[datakey] < maxtime))
+                sorted.push(e);
+        };
+
         for (var k in coll) {
-            coll[k].forEach(function(e) {
-                if ((e[datakey]) &&
-                    (e[datakey] > reftime) &&
-                    (e[datakey] < maxtime))
-                    sorted.push(e);
-            });
+            if (coll.hasOwnProperty(k)) coll[k].forEach(filterValidTime);
         }
 
         /* aikajärjestys */
-        sorted.sort(function(a, b) {
+        sorted.sort(function (a, b) {
 
             /* ensisijaisesti datakey:n mukaan */
             if (a[datakey] > b[datakey])
@@ -342,7 +353,7 @@ function pack(cont, cld) {
 
             /* huom, sorttauksen jälkeen vasta */
             var rebundled = {};
-            sorted = sorted.filter(function(k) {
+            sorted = sorted.filter(function (k) {
 
                 var key = k.lineref + '_' + k.stopnum;
                 if (rebundled[key]) {
@@ -354,7 +365,6 @@ function pack(cont, cld) {
             });
         }
 
-
         /* display */
         var tbody = ct('tbody');
         var table = pack(ct('table'), tbody);
@@ -365,39 +375,6 @@ function pack(cont, cld) {
             /* pointer takaisin alkuun */
             pagepos = firstrow;
         }
-
-
-// eli etsiään tagi id:ll var tag = el('ititle');
-// tyhjennetään rc(tag), + pakataan uusi text-node pack(tag, tn('Lijne'))
-
-
-        /* kielipyöritys */
-//        var titlediv = el('ititle');
-//        if (titlediv) {
-//            if ((incremental++) % 2) {
-//                pack(rc(ititle), tn('Linje'));
-//            } else {
-//                pack(rc(ititle), tn('Linja'));
-//            }
-//        }
-
-//        var titlerow = cl(ct('tr'), 'headerrow');
-//        var titleline = pack(ct('td'), tn('Linja'));
-//        var titledest = pack(ct('td'), tn('Määränpää'));
-//        var titleaimed = pack(ct('td'), tn('Aikataulu'));
-//        var titleexpected = pack(ct('td'), tn('Arvioitu'));
-//        var titlestop = pack(ct('td'), tn('Pysäkki'));
-//
-//        var spantitle = cl(ct('span'), 'title');
-//        var liststart = cl(ct('ul'), 'texts');
-//        var listend = cl(ct(li))
-//
-//        pack(titlerow, cl(titleline, ''));
-//        pack(titlerow, cl(titledest, ''));
-//        pack(titlerow, cl(titleaimed, ''));
-//        pack(titlerow, cl(titleexpected, ''));
-//        pack(titlerow, cl(titlestop, ''));
-//        pack(tbody, titlerow);
 
         var i = pagerows;
         var origpos = pagepos;
@@ -412,14 +389,15 @@ function pack(cont, cld) {
             } else {
                 dest = pack(ct('td'), tn(e.destinationdisplay));
             }
-            var sanedateAimed = strftime('H:i', e['aimeddeparturetime']);
+
+            var sanedateAimed = strftime('H:i', e.aimeddeparturetime);
             var sanedateExpected = strftime('H:i', e[datakey]);
             var departureAimed = pack(ct('td'), tn(sanedateAimed));
-            //var departureExpected = pack(ct('td'), tn(sanedateExpected));
             var row = cl(ct('tr'), ('row row' + (i % 2)));
             pack(row, cl(line, 'line'));
             pack(row, cl(dest, 'dest'));
-//jos arvioitu suurempi niin silloin käytetään sitä
+
+            //jos arvioitu suurempi niin silloin käytetään sitä
             if (sanedateAimed < sanedateExpected) {
                 var boldexpe = pack(ct('b'), tn(sanedateExpected));
                 var departureExpected = pack(ct('td'), boldexpe);
@@ -427,12 +405,14 @@ function pack(cont, cld) {
             } else {
                 pack(row, cl(departureAimed, 'depa'));
             }
+
             pack(row, cl(stop, 'stop'));
             pack(tbody, row);
         }
 
         /* vanhat pois ja uusi lista tilalle */
         var helpdiv = ct('div');
+
         //pack(helpdiv, tn('Sivu : ' + origpos + ' / ' + sorted.length));
         pack(rc(listnode), helpdiv);
         pack(listnode, table);
@@ -444,7 +424,8 @@ function pack(cont, cld) {
 
         try {
 
-            eval('var resp = ' + response);
+            var resp = '';
+            eval('resp = ' + response);
             if (resp && resp.status) {
                 if ((resp.status == 'OK') &&
                     (resp.sys == 'SM') && (resp.result)) {
@@ -453,7 +434,7 @@ function pack(cont, cld) {
                     reftime = resp.servertime;
 
                     /* ja keräillään kamat */
-                    resp.result.forEach(function(k) {
+                    resp.result.forEach(function (k) {
                         k.stopnum = stopnum;
                     });
 
@@ -478,11 +459,11 @@ function pack(cont, cld) {
         }
     }
 
-    function probe_gen(stopnum) {
+    function probeGen(stopnum) {
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'http://data-western.foli.fi/stops/' + stopnum, true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
 
             if (xhr.readyState != 4)
                 return; /* ei viälä valmista */
@@ -499,11 +480,11 @@ function pack(cont, cld) {
         xhr.send();
     }
 
-    function probe_ie(stopnum) {
+    function probeIE(stopnum) {
 
         var xhr = new XDomainRequest();
         xhr.open('GET', 'http://data-western.foli.fi/stops/' + stopnum);
-        xhr.onload = function() {
+        xhr.onload = function () {
             parse(stopnum, xhr.responseText);
         };
 
@@ -516,16 +497,16 @@ function pack(cont, cld) {
     function poll() {
 
         var probe = (window.XDomainRequest && window.ActiveXObject) ?
-            probe_ie : probe_gen;
+            probeIE : probeGen;
 
         /* heitetään requestit keräilyyn... */
-        probe_stops.forEach(function(k) {
+        probeStops.forEach(function (k) {
             probe(k);
         });
 
         /* ...ja ei kantsi sorttailla joka kuin kerran per poll(),
          viivästytetään vähän että ehtii tulokset tulla */
-        window.setTimeout(sort_and_display, 2000);
+        window.setTimeout(sortAndDisplay, 2000);
     }
 
     /* asetukset url:stä */
@@ -537,7 +518,6 @@ function pack(cont, cld) {
     /* plus kerta-ajo heti alkuun*/
     poll();
 })();
-
 
 /*
  Local variables: ***

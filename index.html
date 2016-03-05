@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,17 +16,17 @@
         }); //document ready
 
         function updateClock() {
-            var t = new Date()
+            var t = new Date();
             t.toString('yyyy-MM-dd');
             var H = t.getHours();
             var M = t.getMinutes();
             var S = t.getSeconds();
             if (H < 10)
-                H = "0" + H
+                H = "0" + H;
             if (M < 10)
-                M = "0" + M
+                M = "0" + M;
             if (S < 10)
-                S = "0" + S
+                S = "0" + S;
             $("#clock").text(H + ":" + M);
             setTimeout(updateClock, 1000);
             var time = H + ":" + M;

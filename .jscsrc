@@ -1,0 +1,10 @@
+{
+  "excludeFiles": [
+    "js/jquery.lettering.js",
+    "js/jquery.min.js",
+    "js/textillate.js"
+  ],
+  "preset": "airbnb",
+  "validateIndentation": 4,
+  "requireTrailingComma": false
+}
