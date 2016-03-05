@@ -51,23 +51,23 @@ function strftime(format, date) {
 }
 
 /** create-element */
-function ct(tag) {
+function createTag(tag) {
     return document.createElement(tag);
 }
 
 /** create-text-node */
-function tn(txt) {
+function createTextNode(txt) {
     return document.createTextNode('' + txt);
 }
 
 /** set class */
-function cl(e, v) {
+function setClass(e, v) {
     e.className = v;
     return e;
 }
 
 /** pack cld -&gt; cont */
-function pack(cont, cld) {
+function appendChild(cont, cld) {
     cont.appendChild(cld);
     return cont;
 }
@@ -247,8 +247,8 @@ function pack(cont, cld) {
         }
 
         /* display */
-        var tbody = ct('tbody');
-        var table = pack(ct('table'), tbody);
+        var tbody = createTag('tbody');
+        var table = appendChild(createTag('table'), tbody);
 
         if ((pagepos < firstrow) ||
             (pagepos >= sorted.length) ||
@@ -261,44 +261,44 @@ function pack(cont, cld) {
         while ((pagepos < sorted.length) && (pagepos < lastrow) && (i--)) {
 
             var e = sorted[pagepos++];
-            var stop = pack(ct('td'), tn(e.stopnum));
-            var line = pack(ct('td'), tn(e.lineref));
+            var stop = appendChild(createTag('td'), createTextNode(e.stopnum));
+            var line = appendChild(createTag('td'), createTextNode(e.lineref));
             var dest = '';
             if (e.stopnum === '1586' || e.stopnum === '1' || e.stopnum === '2') {
-                dest = pack(ct('td'), tn('Kauppatori'));
+                dest = appendChild(createTag('td'), createTextNode('Kauppatori'));
             } else {
-                dest = pack(ct('td'), tn(e.destinationdisplay));
+                dest = appendChild(createTag('td'), createTextNode(e.destinationdisplay));
             }
 
             var sanedateAimed = strftime('H:i', e.aimeddeparturetime);
             var sanedateExpected = strftime('H:i', e[datakey]);
-            var departureAimed = pack(ct('td'), tn(sanedateAimed));
-            var row = cl(ct('tr'), ('row row' + (i % 2)));
-            pack(row, cl(line, 'line'));
-            pack(row, cl(dest, 'dest'));
+            var departureAimed = appendChild(createTag('td'), createTextNode(sanedateAimed));
+            var row = setClass(createTag('tr'), ('row row' + (i % 2)));
+            appendChild(row, setClass(line, 'line'));
+            appendChild(row, setClass(dest, 'dest'));
 
             //jos arvioitu suurempi niin silloin käytetään sitä
             if (sanedateAimed < sanedateExpected) {
-                var boldexpe = pack(ct('b'), tn(sanedateExpected));
-                var departureExpected = pack(ct('td'), boldexpe);
-                pack(row, cl(departureExpected, 'depa'));
+                var boldexpe = appendChild(createTag('b'), createTextNode(sanedateExpected));
+                var departureExpected = appendChild(createTag('td'), boldexpe);
+                appendChild(row, setClass(departureExpected, 'depa'));
             } else {
-                pack(row, cl(departureAimed, 'depa'));
+                appendChild(row, setClass(departureAimed, 'depa'));
             }
 
-            pack(row, cl(stop, 'stop'));
-            pack(tbody, row);
+            appendChild(row, setClass(stop, 'stop'));
+            appendChild(tbody, row);
         }
 
         /* vanhat pois ja uusi lista tilalle */
-        var helpdiv = ct('div');
+        var helpdiv = createTag('div');
 
         while (listnode.firstChild) {
             listnode.removeChild(listnode.firstChild);
         }
 
-        pack(listnode, helpdiv);
-        pack(listnode, table);
+        appendChild(listnode, helpdiv);
+        appendChild(listnode, table);
     }
 
     /* parse jsonstop, yhteinen käsittely ie:n
