@@ -54,19 +54,12 @@ var DEBUG = true;
 })();
 
 /* pari helpperifunkkarit takataskukataloogista */
+
 function strpadLeft(str, chr, len) {
     str = '' + str;
     if (len > str.length)
         for (len = len - str.length; len > 0; len--)
             str = chr.charAt(0) + str;
-    return str;
-}
-
-function strpadRight(str, chr, len) {
-    str = '' + str;
-    if (len > str.length)
-        for (len = len - str.length; len > 0; len--)
-            str += chr.charAt(0);
     return str;
 }
 
@@ -130,14 +123,6 @@ function rc(e) {
     e = el(e);
     while (e.firstChild)
         e.removeChild(e.firstChild);
-    return e;
-}
-
-/* set-attribute */
-function at(e, a, v) {
-    if (!(e = el(e)))
-        return false;
-    e.setAttribute(a, v);
     return e;
 }
 
