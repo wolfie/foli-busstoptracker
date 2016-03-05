@@ -3,34 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="x-ua-compatible" content="IE=11">
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.lettering.js"></script>
-    <script type="text/javascript" src="js/textillate.js"></script>
     <link rel='stylesheet' href='css/animate.css' type='text/css' media='all' />
     <link rel='stylesheet' href='css/styles.css' type='text/css' media='all' />
-
-    <script type="text/javascript">
-        $(function() {
-            $('.title').textillate({
-                loop: true,
-                in: {
-                    effect: 'fadeIn',
-                    sync: true},
-                out: {
-                    effect: 'fadeOut',
-                    sync: true}
-            });
-            $('.dest').textillate({
-                loop: true,
-                in: {
-                    effect: 'fadeIn',
-                    sync: true},
-                out: {
-                    effect: 'fadeOut',
-                    sync: true}
-            });
-        })
-    </script>
 </head>
 <body>
 <header>
@@ -48,49 +22,15 @@
     </section>
 </header>
 <div id="tableheader">
-    <div id="header-line">
-            <span class="title">
-                <ul class="texts">
-                    <li>Linja</li>
-                    <li>Linje</li>
-                </ul>
-            </span>
-    </div>
-    <div id="header-dest">
-            <span class="title">
-                <ul class="texts">
-                    <li>Määränpää</li>
-                    <li>Destination</li>
-                </ul>
-            </span>
-    </div>
-    <div id="header-depa">
-            <span class="title">
-                <ul class="texts">
-                    <li>Lähtö</li>
-                    <li>Avgång</li>
-                </ul>
-            </span>
-    </div>
-    <div id="header-stop">
-            <span class="title">
-                <ul class="texts">
-                    <li>Pys.</li>
-                    <li>Stop</li>
-                </ul>
-            </span>
-    </div>
+    <div id="headerLine" data-swaptext="Linja|Linje"></div>
+    <div id="headerDest" data-swaptext="Määränpää|Destination"></div>
+    <div id="headerDepa" data-swaptext="Lähtö|Avgång"></div>
+    <div id="headerStop" data-swaptext="Pys.|Stop"></div>
 </div>
 <span id="icontent"></span>
 
 <script type="text/javascript">
     (function() {
-        /**
-         * @global
-         * @name clock
-         * @type HTMLDivElement
-         */
-
         function updateClock() {
             var t = new Date();
             t.toString('yyyy-MM-dd');
@@ -105,6 +45,39 @@
             setTimeout(updateClock, 1000);
         }
         updateClock();
+
+        var SWAP_TEXT_SPEED_MILLIS = 5000;
+        /**
+         * Swap two pieces of text in an element.
+         * <p>
+         * The texts are taken from the <code>data-swaptext</code> attribute of the element
+         *
+         * @param {HTMLDivElement} element
+         */
+        function swapText(element) {
+            var text = element.getAttribute('data-swaptext');
+            if (!text) {
+                element.textContent = "Can't find text to swap";
+                return;
+            }
+            var splits = text.split('|', 2);
+
+            if (!element.textContent ||
+                    (element.textContent !== splits[0] && element.textContent !== splits[1]) ||
+                    element.textContent === splits[1]) {
+                element.textContent = splits[0];
+            } else {
+                element.textContent = splits[1];
+            }
+            setTimeout(function() {
+                swapText(element);
+            }, SWAP_TEXT_SPEED_MILLIS);
+        }
+
+        swapText(headerLine);
+        swapText(headerDest);
+        swapText(headerDepa);
+        swapText(headerStop);
     })();
 </script>
 

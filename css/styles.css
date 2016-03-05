@@ -45,24 +45,24 @@ section#right img {
     font-weight: bold;
 }
 
-#header-line {
+#headerLine {
     display: block;
     float: left;
     width: 15%;
 }
-#header-dest {
+#headerDest {
     display: block;
     float: left;
     width: 45%;
 }
 
-#header-depa {
+#headerDepa {
     display: block;
     float: left;
     width: 220px;
 }
 
-#header-stop {
+#headerStop {
     display: block;
     float: right;
     width: 15%;
