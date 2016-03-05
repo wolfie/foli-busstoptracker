@@ -50,14 +50,25 @@ function strftime(format, date) {
     return res;
 }
 
-/** create-element */
-function createTag(tag) {
-    return document.createElement(tag);
-}
+/**
+ * create-element
+ * @param {string} tag
+ * @param {HTMLElement|string|Number} [child]
+ */
+function createTag(tag, child) {
+    var element = document.createElement(tag);
 
-/** create-text-node */
-function createTextNode(txt) {
-    return document.createTextNode('' + txt);
+    if (child && child instanceof Node) {
+        if (child instanceof Element || child.nodeName === '#text') {
+            element.appendChild(child);
+        } else {
+            console.error('Cannot append ' + child + ' to ' + tag);
+        }
+    } else if (typeof child === 'number' || typeof child === 'string') {
+        element.textContent = child;
+    }
+
+    return element;
 }
 
 /** set class */
@@ -261,26 +272,26 @@ function appendChild(cont, cld) {
         while ((pagepos < sorted.length) && (pagepos < lastrow) && (i--)) {
 
             var e = sorted[pagepos++];
-            var stop = appendChild(createTag('td'), createTextNode(e.stopnum));
-            var line = appendChild(createTag('td'), createTextNode(e.lineref));
+            var stop = createTag('td', e.stopnum);
+            var line = createTag('td', e.lineref);
             var dest = '';
             if (e.stopnum === '1586' || e.stopnum === '1' || e.stopnum === '2') {
-                dest = appendChild(createTag('td'), createTextNode('Kauppatori'));
+                dest = createTag('td', 'Kauppatori');
             } else {
-                dest = appendChild(createTag('td'), createTextNode(e.destinationdisplay));
+                dest = createTag('td', e.destinationdisplay);
             }
 
             var sanedateAimed = strftime('H:i', e.aimeddeparturetime);
             var sanedateExpected = strftime('H:i', e[datakey]);
-            var departureAimed = appendChild(createTag('td'), createTextNode(sanedateAimed));
+            var departureAimed = createTag('td', sanedateAimed);
             var row = setClass(createTag('tr'), ('row row' + (i % 2)));
             appendChild(row, setClass(line, 'line'));
             appendChild(row, setClass(dest, 'dest'));
 
             //jos arvioitu suurempi niin silloin käytetään sitä
             if (sanedateAimed < sanedateExpected) {
-                var boldexpe = appendChild(createTag('b'), createTextNode(sanedateExpected));
-                var departureExpected = appendChild(createTag('td'), boldexpe);
+                var boldexpe = createTag('b', sanedateExpected);
+                var departureExpected = createTag('td', boldexpe);
                 appendChild(row, setClass(departureExpected, 'depa'));
             } else {
                 appendChild(row, setClass(departureAimed, 'depa'));
