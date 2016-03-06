@@ -50,6 +50,9 @@ function setClass(e, v) {
         _length: 0
     };
 
+    /** A counter that keeps a tab on how many queries are currently active. */
+    var activeQueries = 0;
+
     function parseParams() {
 
         var pairs = window.location.search.substring(1).split('&');
@@ -315,6 +318,8 @@ function setClass(e, v) {
     }
 
     function probe(stopnum) {
+        activeQueries++;
+
         var xhr = new XMLHttpRequest();
         xhr.open('GET', REST_ENDPOINT + stopnum, true);
         xhr.onreadystatechange = function () {
@@ -322,27 +327,27 @@ function setClass(e, v) {
             if (xhr.readyState != 4)
                 return; /* ei viälä valmista */
 
-            /* else */
+            activeQueries--;
+
             if (xhr.status != 200)
                 return; // kusi, no hätä, interval hakee sitten uusiksi
 
             /* yhteinen käsittely */
             parse(stopnum, xhr.responseText);
+
+            if (activeQueries === 0) {
+                sortAndDisplay();
+            }
         };
 
         xhr.send();
     }
 
     function poll() {
-
         /* heitetään requestit keräilyyn... */
         probeStops.forEach(function (k) {
             probe(k);
         });
-
-        /* ...ja ei kantsi sorttailla joka kuin kerran per poll(),
-         viivästytetään vähän että ehtii tulokset tulla */
-        window.setTimeout(sortAndDisplay, 2000);
     }
 
     /* asetukset url:stä */
