@@ -7,6 +7,9 @@ header {
     display: block;
     height: 300px;
     padding: 0 1em;
+    position: fixed;
+    width: 100%;
+    background-color: white;
 }
 
 section#left {
@@ -45,6 +48,9 @@ section#right img {
     text-align: left;
     padding-top: 40px;
     font-weight: bold;
+    position: fixed;
+    top: 300px;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.2);
 }
 
 #headerLine {
@@ -74,6 +80,10 @@ section#right img {
     text-align: left;
     font-size: 50px;
     height: 150px;
+}
+
+#icontent {
+    padding-top: 450px;
 }
 
 #routes tr {
