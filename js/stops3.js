@@ -22,12 +22,6 @@ function padNumberToTwoChars(number) {
     return (number < 10) ? '0' + number : '' + number;
 }
 
-/** set class */
-function setClass(e, v) {
-    e.className = v;
-    return e;
-}
-
 /** ja logiikka itte */
 (function () {
 
