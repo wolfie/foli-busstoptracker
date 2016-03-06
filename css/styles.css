@@ -139,5 +139,5 @@ td.stop { }
 tr.row {
     height: 20px;
 }
-tr.row1 { background-color: #F4D600; }
-tr.row0 { background-color: #ccc; }
+tr:nth-child(even) { background-color: #F4D600; }
+tr:nth-child(odd) { background-color: #ccc; }

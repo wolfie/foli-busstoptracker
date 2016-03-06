@@ -223,7 +223,7 @@ function setClass(e, v) {
             //noinspection JSValidateTypes
             /** @type HTMLTableRowElement */
             var row = table.insertRow(-1);
-            row.className = 'row row' + (row.rowIndex % 2);
+            row.className = 'row';
 
             var e = sorted[pagepos++];
 
