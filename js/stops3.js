@@ -46,6 +46,9 @@ function setClass(e, v) {
     var datakey = 'expecteddeparturetime';
     var bundle = 1;
     var probeStops = [];
+    var lines = {
+        _length: 0
+    };
 
     function parseParams() {
 
@@ -130,6 +133,14 @@ function setClass(e, v) {
                             probeStops = value.split(',');
                     }
                     break;
+                case 'lines':
+                    var splitValue = value.split(',');
+                    lines._length = splitValue.length;
+                    splitValue.forEach(function (line) {
+                        lines[line] = true;
+                    });
+
+                    break;
             }
         });
 
@@ -142,6 +153,7 @@ function setClass(e, v) {
             console.log('datakey: %o', datakey);
             console.log('bundle: %o', bundle);
             console.log('probeStops: %o', probeStops);
+            console.log('lines: %o', lines);
         }
     }
 
@@ -156,8 +168,10 @@ function setClass(e, v) {
 
         var sorted = [];
         var maxtime = reftime + maxforwardtime;
+
         var filterValidTime = function (e) {
-            if ((e[datakey]) &&
+            if ((lines._length === 0 || lines[e.lineref]) &&
+                (e[datakey]) &&
                 (e[datakey] > reftime) &&
                 (e[datakey] < maxtime))
                 sorted.push(e);
