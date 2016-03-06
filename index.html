@@ -41,6 +41,15 @@
         }
         updateClock();
 
+        var MAX_SHADOW_SIZE = 10;
+        var MAX_SHADOW_OPACITY = 0.3;
+        var MAX_SCROLL_POS = 200;
+        window.addEventListener('scroll', function() {
+            var scrollProgression = Math.min(window.scrollY, MAX_SCROLL_POS) / MAX_SCROLL_POS;
+            var shadow = scrollProgression * MAX_SHADOW_SIZE;
+            var opacity = scrollProgression * MAX_SHADOW_OPACITY;
+            tableheader.style.boxShadow = '0 ' + shadow + 'px ' + shadow + 'px rgba(0,0,0,' + opacity + ')';
+        });
     })();
 </script>
 

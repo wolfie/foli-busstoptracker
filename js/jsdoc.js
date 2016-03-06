@@ -34,6 +34,11 @@
  * @name icontent
  * @type HTMLDivElement
  */
+/**
+ * @global
+ * @name tableheader
+ * @type HTMLDivElement
+ */
 
 /**
  * @typedef {object} StopMonitoringData

@@ -50,7 +50,6 @@ section#right img {
     font-weight: bold;
     position: fixed;
     top: 300px;
-    box-shadow: 0 5px 5px rgba(0,0,0,0.2);
 }
 
 #headerLine {
