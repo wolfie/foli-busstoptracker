@@ -3,27 +3,6 @@ var DEBUG = true;
 var REST_ENDPOINT = 'http://data-western.foli.fi/stops/';
 
 /**
- * create-element
- * @param {string} tag
- * @param {HTMLElement|string|Number} [child]
- */
-function createTag(tag, child) {
-    var element = document.createElement(tag);
-
-    if (child && child instanceof Node) {
-        if (child instanceof Element || child.nodeName === '#text') {
-            element.appendChild(child);
-        } else {
-            console.error('Cannot append ' + child + ' to ' + tag);
-        }
-    } else if (typeof child === 'number' || typeof child === 'string') {
-        element.textContent = child;
-    }
-
-    return element;
-}
-
-/**
  * @param {HTMLTableRowElement} row
  * @param {string} cellContent
  * @param {string} cellClassName
@@ -227,8 +206,9 @@ function setClass(e, v) {
 
         /* display */
 
+        //noinspection JSValidateTypes
         /** @type HTMLTableElement */
-        var table = createTag('table');
+        var table = document.createElement('table');
 
         if ((pagepos < firstrow) ||
             (pagepos >= sorted.length) ||
