@@ -1,50 +1,57 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
-    font-size: 62.5%;
+    font-size: 50px;
 }
 header {
     display: block;
     height: 300px;
-    padding: 0 1em;
+    padding: 0 10px;
     position: fixed;
     width: 100%;
     background-color: white;
 }
 
-section#left {
+#left {
     float: left;
     width: 20%;
     margin-top: 30px;
 }
-section#middle {
+#middle {
     float: left;
     width: 60%;
     text-align: center;
     margin-top: 60px;
-    font-size: 2em;
 }
-section#right {
+#right {
     float: right;
     width: 20%;
     text-align:right;
     padding-top: 50px;
 }
-section#right img {
+#right img {
     margin-right: 10px;
+}
+
+#logo {
+    display: inline-block;
+}
+
+#logo_mobile {
+    display: none;
 }
 
 #clock {
     color: #000;
-    font-size: 8em;
+    font-size: 250%;
 }
 
 #tableheader {
     display: block;
-    height: 110px;
+    box-sizing: border-box;
+    height: 150px;
     width: 100%;
     background-color: #F4D600;
-    font-size: 50px;
     text-align: left;
     padding-top: 40px;
     font-weight: bold;
@@ -75,19 +82,12 @@ section#right img {
     width: 15%;
 }
 
-#routes th {
-    text-align: left;
-    font-size: 50px;
-    height: 150px;
-}
-
 #icontent {
     padding-top: 450px;
 }
 
 #routes tr {
     text-align: left;
-    font-size: 60px;
     height: 80px;
 }
 
@@ -97,18 +97,13 @@ section#right img {
 }
 
 table {
-    font-size: 20pt;
     width: 100%;
     border-spacing: 0px;
 }
-th {
-    text-align: left;
-    font-size: 50px;
-    height: 150px;
-    background-color: #F4D600;
+
+tr {
+    font-size: 120%;
 }
-
-
 
 td.line {
     width: 15%;
@@ -126,9 +121,6 @@ td.stop {
     width:15%;
 }
 
-tr {
-    font-size: 60px;
-}
 td {
     padding: 4px;
     text-align: left;
@@ -140,3 +132,61 @@ tr.row {
 }
 tr:nth-child(even) { background-color: #F4D600; }
 tr:nth-child(odd) { background-color: #ccc; }
+
+@media screen and (max-height: 700px), screen and (max-width: 1100px)  {
+    body {
+        font-size: 30px;
+    }
+
+    #clock {
+        display: none;
+    }
+
+    #tableheader {
+        height: 100px;
+        padding-top: 30px;
+    }
+
+    #icontent {
+        padding-top: 400px;
+    }
+
+    #headerDepa, .depa {
+        width: 120px;
+    }
+}
+
+@media screen and (max-width: 570px), screen and (max-height: 600px) {
+    body {
+        font-size: 20px;
+    }
+
+    #left {
+        padding: 0;
+        float: none;
+        text-align: center;
+        width: auto;
+        margin: 0;
+    }
+    #logo, #middle, #right {
+        display: none;
+    }
+    #logo_mobile {
+        display: inline-block;
+    }
+
+    #headerDepa, .depa {
+        width: 80px;
+    }
+
+    header {
+        height: 100px;
+    }
+    #tableheader {
+        top: 100px;
+        height: 80px;
+    }
+    #icontent {
+        padding-top: 180px;
+    }
+}
