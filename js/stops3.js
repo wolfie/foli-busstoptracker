@@ -43,17 +43,22 @@ function padNumberToTwoChars(number) {
     var lines = {
         _length: 0
     };
+    var buttons = [];
 
     /** A counter that keeps a tab on how many queries are currently active. */
     var activeQueries = 0;
 
     function parseParams() {
-
         var pairs = window.location.hash.substring(1).split('&');
-
         if (pairs.length === 0) {
             pairs = window.location.search.substring(1).split('&');
         }
+
+        probeStops = [];
+        buttons = [];
+        lines = {
+            _length: 0
+        };
 
         /* saatiin pairs = [ 'param1=aa', 'param2=bee' ] */
         pairs.forEach(function (pair) {
@@ -142,9 +147,25 @@ function padNumberToTwoChars(number) {
                     });
 
                     break;
+                case 'button':
+                    buttons.push(value.split('|'));
+                    break;
             }
 
-            poll();
+            if (probeStops.length === 0 && buttons.length === 0) {
+                buttons = [
+                    ['Kauppatori', 'kauppatori'],
+                    ['Satama', 'satama']
+                ];
+            }
+
+            if (buttons.length === 0) {
+                poll();
+                hideButtons();
+            } else {
+                probeStops = [];
+                showButtons();
+            }
         });
 
         if (DEBUG) {
@@ -157,6 +178,7 @@ function padNumberToTwoChars(number) {
             console.log('bundle: %o', bundle);
             console.log('probeStops: %o', probeStops);
             console.log('lines: %o', lines);
+            console.log('buttons: %o', buttons);
         }
     }
 
@@ -347,6 +369,37 @@ function padNumberToTwoChars(number) {
         coll = {};
         /* heitetään requestit keräilyyn... */
         probeStops.forEach(probe);
+    }
+
+    function showButtons() {
+        timetablecontainer.style.display = 'none';
+        stopselectorcontainer.style.display = 'block';
+        var ul = stopselectorcontainer.firstElementChild;
+
+        while (ul.firstChild) {
+            ul.removeChild(ul.firstChild);
+        }
+
+        buttons.forEach(function (buttonInfo) {
+            var caption = buttonInfo[0];
+            var link = buttonInfo[1];
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+
+            a.href = '#stops=' + link;
+            a.textContent = caption;
+
+            //noinspection JSCheckFunctionSignatures
+            li.appendChild(a);
+
+            //noinspection JSCheckFunctionSignatures
+            ul.appendChild(li);
+        });
+    }
+
+    function hideButtons() {
+        timetablecontainer.style.display = 'block';
+        stopselectorcontainer.style.display = 'none';
     }
 
     /* asetukset url:stä */

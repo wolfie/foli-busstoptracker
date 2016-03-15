@@ -39,6 +39,16 @@
  * @name tableheader
  * @type HTMLDivElement
  */
+/**
+ * @global
+ * @name timetablecontainer
+ * @type HTMLDivElement
+ */
+/**
+ * @global
+ * @name stopselectorcontainer
+ * @type HTMLDivElement
+ */
 
 /**
  * @typedef {object} StopMonitoringData

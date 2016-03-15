@@ -3,5 +3,5 @@
   "globalstrict": true,
   "browser": true,
   "devel": true,
-  "predef": ["icontent"]
+  "predef": ["icontent", "timetablecontainer", "stopselectorcontainer"]
 }
