@@ -25,7 +25,7 @@ function padNumberToTwoChars(number) {
 /** ja logiikka itte */
 (function () {
 
-    /** type {Object.<*, StopMonitoringData} */
+    /** @type {Object.<*, StopMonitoringData>} */
     var coll = {};
 
     var reftime = 0; // otetaan kello serveriltä, niin ei haittaa jos clientti väärässä ajassa
