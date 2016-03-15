@@ -339,9 +339,7 @@ function padNumberToTwoChars(number) {
 
     function poll() {
         /* heitetään requestit keräilyyn... */
-        probeStops.forEach(function (k) {
-            probe(k);
-        });
+        probeStops.forEach(probe);
     }
 
     /* asetukset url:stä */
