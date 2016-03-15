@@ -404,6 +404,12 @@ function padNumberToTwoChars(number) {
     function hideButtons() {
         timetablecontainer.style.display = 'block';
         stopselectorcontainer.style.display = 'none';
+
+        // workaround for stopped animations
+        headerLine.style.opacity = 1;
+        headerDest.style.opacity = 1;
+        headerDepa.style.opacity = 1;
+        headerStop.style.opacity = 1;
     }
 
     /* asetukset url:stä */

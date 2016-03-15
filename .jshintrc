@@ -3,5 +3,8 @@
   "globalstrict": true,
   "browser": true,
   "devel": true,
-  "predef": ["icontent", "timetablecontainer", "stopselectorcontainer"]
+  "predef": [
+    "icontent", "timetablecontainer", "stopselectorcontainer",
+    "headerLine", "headerDest", "headerDepa", "headerStop"
+  ]
 }
