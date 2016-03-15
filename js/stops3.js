@@ -61,6 +61,10 @@ function padNumberToTwoChars(number) {
     var lines = {
         _length: 0
     };
+    /**
+     * <code>stopname|stopnumber:linenumber</code> (linenumber is optional)
+     * @type string[]
+     */
     var buttons = [];
 
     /** A counter that keeps a tab on how many queries are currently active. */
@@ -150,7 +154,7 @@ function padNumberToTwoChars(number) {
 
                     break;
                 case 'button':
-                    buttons.push(value.split('|'));
+                    buttons.push(value);
                     break;
             }
 
@@ -384,14 +388,16 @@ function padNumberToTwoChars(number) {
             ul.removeChild(ul.firstChild);
         }
 
-        buttons.forEach(function (buttonInfo) {
-            var caption = buttonInfo[0];
-            var link = buttonInfo[1];
+        buttons.forEach(function (buttonString) {
+            var button = parseButton(buttonString);
             var li = document.createElement('li');
             var a = document.createElement('a');
 
-            a.href = '#stops=' + link;
-            a.textContent = caption;
+            a.textContent = button.caption;
+            a.href = '#stops=' + button.stops;
+            if (button.lines !== undefined) {
+                a.href += '&lines=' + button.lines;
+            }
 
             //noinspection JSCheckFunctionSignatures
             li.appendChild(a);
@@ -410,6 +416,24 @@ function padNumberToTwoChars(number) {
         headerDest.style.opacity = 1;
         headerDepa.style.opacity = 1;
         headerStop.style.opacity = 1;
+    }
+
+    /**
+     * @param {string} text
+     * @returns {{caption: string, stops: string, lines: string|undefined}}
+     */
+    function parseButton(text) {
+        var split = text.split('|', 2);
+        var buttonName = split[0];
+        split = split[1].split(':', 2);
+        var stops = split[0];
+        var lines = split[1];
+
+        return {
+            caption: buttonName,
+            stops: stops,
+            lines: lines
+        };
     }
 
     /* asetukset url:stä */
