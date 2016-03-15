@@ -10,6 +10,16 @@ var DEFAULT_BUTTONS = [
     ['Lentokenttä', 'lentokentta']
 ];
 
+/** @type {Object.<*, string[]>} */
+var PRESET_STOPS = {
+    ikea: ['2125', '2126'],
+    kauppatori: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9',
+        'T10', 'T24', 'T34', 'T36', 'T38', 'T40', 'T33', 'T35', 'T37',
+        'T39', 'T42', 'T41', 'T53'],
+    satama: ['1', '2'],
+    lentokentta: ['1586']
+};
+
 /**
  * @param {HTMLTableRowElement} row
  * @param {string} cellContent
@@ -125,27 +135,11 @@ function padNumberToTwoChars(number) {
 
                     break;
                 case 'stops':
-                    /* pysäkkilista pilkkuerotettuna tai sitten joku
-                     valmis defaultti */
-                    switch (value) {
-                        case 'ikea':
-                            probeStops = ['2125', '2126'];
-                            break;
-                        case 'kauppatori':
-                            probeStops = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9',
-                                'T10', 'T24', 'T34', 'T36', 'T38', 'T40', 'T33', 'T35', 'T37',
-                                'T39', 'T42', 'T41', 'T53'];
-                            break;
-                        case 'satama':
-                            probeStops = ['1', '2'];
-                            break;
-                        case 'lentokentta':
-                            probeStops = ['1586'];
-                            break;
-                        default:
-                            /* pilkkueroiteltu */
-                            probeStops = value.split(',');
+                    probeStops = PRESET_STOPS[value.toLowerCase()];
+                    if (probeStops === undefined) {
+                        probeStops = value.split(',');
                     }
+
                     break;
                 case 'lines':
                     var splitValue = value.split(',');
