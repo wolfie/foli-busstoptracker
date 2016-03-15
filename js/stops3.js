@@ -143,6 +143,8 @@ function padNumberToTwoChars(number) {
 
                     break;
             }
+
+            poll();
         });
 
         if (DEBUG) {
@@ -342,6 +344,7 @@ function padNumberToTwoChars(number) {
     }
 
     function poll() {
+        coll = {};
         /* heitetään requestit keräilyyn... */
         probeStops.forEach(probe);
     }
@@ -352,7 +355,4 @@ function padNumberToTwoChars(number) {
 
     /* timer käyntiin */
     window.setInterval(poll, (pollinterval * 1000));
-
-    /* plus kerta-ajo heti alkuun*/
-    poll();
 })();
