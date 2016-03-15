@@ -49,7 +49,11 @@ function padNumberToTwoChars(number) {
 
     function parseParams() {
 
-        var pairs = window.location.search.substring(1).split('&');
+        var pairs = window.location.hash.substring(1).split('&');
+
+        if (pairs.length === 0) {
+            pairs = window.location.search.substring(1).split('&');
+        }
 
         /* saatiin pairs = [ 'param1=aa', 'param2=bee' ] */
         pairs.forEach(function (pair) {
@@ -344,6 +348,7 @@ function padNumberToTwoChars(number) {
 
     /* asetukset url:stä */
     parseParams();
+    window.addEventListener('hashchange', parseParams, false);
 
     /* timer käyntiin */
     window.setInterval(poll, (pollinterval * 1000));
