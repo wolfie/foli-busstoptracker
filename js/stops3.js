@@ -2,6 +2,13 @@
 var DEBUG = true;
 var REST_ENDPOINT = 'http://data-western.foli.fi/stops/';
 
+var DEFAULT_BUTTONS = [
+    ['Kauppatori', 'kauppatori'],
+    ['Satama', 'satama'],
+    ['Ikea', 'ikea'],
+    ['Lentokenttä', 'lentokentta']
+];
+
 /**
  * @param {HTMLTableRowElement} row
  * @param {string} cellContent
@@ -153,10 +160,7 @@ function padNumberToTwoChars(number) {
             }
 
             if (probeStops.length === 0 && buttons.length === 0) {
-                buttons = [
-                    ['Kauppatori', 'kauppatori'],
-                    ['Satama', 'satama']
-                ];
+                buttons = DEFAULT_BUTTONS;
             }
 
             if (buttons.length === 0) {
