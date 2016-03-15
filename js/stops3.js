@@ -2,6 +2,7 @@
 var DEBUG = true;
 var REST_ENDPOINT = 'http://data-western.foli.fi/stops/';
 
+/** @type [string[]] */
 var DEFAULT_BUTTONS = [
     ['Kauppatori', 'kauppatori'],
     ['Satama', 'satama'],
