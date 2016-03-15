@@ -155,7 +155,12 @@ function padNumberToTwoChars(number) {
             }
 
             if (probeStops.length === 0 && buttons.length === 0) {
-                buttons = DEFAULT_BUTTONS;
+                var b = [];
+                DEFAULT_BUTTONS.forEach(function (pair) {
+                    b.push('button=' + pair.join('|'));
+                });
+
+                window.location.hash = b.join('&');
             }
 
             if (buttons.length === 0) {
