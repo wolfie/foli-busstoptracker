@@ -424,7 +424,7 @@ function padNumberToTwoChars(number) {
      */
     function parseButton(text) {
         var split = text.split('|', 2);
-        var buttonName = split[0];
+        var buttonName = split[0].replace(/\+/g, ' ');
         split = split[1].split(':', 2);
         var stops = split[0];
         var lines = split[1];

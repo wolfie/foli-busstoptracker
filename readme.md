@@ -13,9 +13,9 @@ haku otetaan huomioon.
 * **button** Ruudulla näytettävä nappi, muodossa 
     "Napin teksti|pysäkki:linja". Esimerkiksi "`Ikea|2125,2126`" 
     näyttäisi napin jossa lukee "Ikea", joka näyttäisi pysäkkien 2125 ja 
-    2126 aikataulut. "`Kotiin|123:321`" Näyttäisi napin "Kotiin", joka 
-    näyttää bussit 321 pysäkiltä 123. Tämä parametri voi esiintyä useaan 
-    otteeseen osoitteessa.
+    2126 aikataulut. "`Töistä+kotiin|123:321`" Näyttäisi napin "Töistä 
+    kotiin", joka näyttää bussit 321 pysäkiltä 123. Tämä parametri voi 
+    esiintyä useaan otteeseen osoitteessa.
 * **stops** Pysäkin koodi (esim "`T1`" tai "`2125`"), jonka aikataulut 
     haetaan. Useampi aikataulu haetaan kun niiden koodit erotellaan 
     pilkulla (esim "`T1,2125`").
