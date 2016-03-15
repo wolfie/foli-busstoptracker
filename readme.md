@@ -1,5 +1,32 @@
 # Pysäkkinäyttö Fölin busseille
 
+## Syntaksi
+
+Osoitteeseen muodostetaan haku jonka perusteella aikataulutiedot haetaan.
+Muoto on esimerkiksi `http://example.com/?stops=1,2&lines=3,4` (GET 
+parametri) tai `http://example.com/?stops=1,2&lines=3,4` (fragment 
+identifier).
+ 
+Jos osoitteessa on molemmat muodot, vain fragment identifier -muodon
+haku otetaan huomioon.
+
+* **button** Ruudulla näytettävä nappi, muodossa "Napin teksti|nro,nro". 
+    Esimerkiksi "`Ikea|2125,2126`" näyttäisi napin jossa lukee "Ikea", 
+    joka näyttäisi pysäkkien 2125 ja 2126 aikataulut.
+* **stops** Pysäkin koodi (esim "`T1`" tai "`2125`"), jonka aikataulut 
+    haetaan. Useampi aikataulu haetaan kun niiden koodit erotellaan 
+    pilkulla (esim "`T1,2125`").
+    * Tässä voi myös antaa esiasetuksista seuraavat: `ikea`, 
+    `kauppatori`, `lentoasema` tai `satama`.  
+* **lines** Bussinumerot jotka tulee näyttää haetulta pysäkiltä.
+* **firstrow**
+* **lastrow**
+* **pagerows**
+* **pollinterval**
+* **bundle**
+* **maxforwardtime**
+* **datakey**
+
 ## Selaintuki
 
 Käytännössä kaikki modernit selaimet ovat tuettuja. Internet Explorerin
